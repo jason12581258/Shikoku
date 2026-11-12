@@ -223,23 +223,11 @@ function renderDay(){tabs.innerHTML=days.map((d,i)=>'<button class="'+(i===curre
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.panel).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})});
 const foods=[['高知','藁燒鰹魚半敲燒'],['香川・丸龜／高松','讚岐烏龍麵'],['愛媛・松山／宇和島','鯛魚飯'],['廣島','廣島燒'],['岡山','祭壽司・蝦飯']];document.getElementById('savedList').innerHTML=foods.map(([area,name])=>'<div class="info-card"><span class="tag">'+area+'</span><h3>'+name+'</h3><p><a class="textlink" target="_blank" rel="noopener" href="'+mapUrl(name+' '+area)+'">搜尋美食店家 ↗</a></p></div>').join('');
 let expenses=JSON.parse(localStorage.getItem('shikoku-expenses')||'[]');
-function currencySymbol(c){return c==='TWD'?'NT
-function convert(){let y=Number(document.getElementById('yen').value),r=Number(document.getElementById('rate').value);document.getElementById('conversion').textContent=Number.isFinite(y*r)&&y>0?'約 NT$ '+Math.round(y*r).toLocaleString():'輸入金額後換算台幣'}document.getElementById('yen').oninput=convert;document.getElementById('rate').oninput=convert;
-
-</script>
-</body>
-</html>
-:'¥'}
+function currencySymbol(c){return c==='TWD'?'NT$':'¥'}
 function renderExpenses(){
   const jpy=expenses.filter(e=>(e.currency||'JPY')==='JPY').reduce((a,b)=>a+b.amount,0);
   const twd=expenses.filter(e=>e.currency==='TWD').reduce((a,b)=>a+b.amount,0);
-  document.getElementById('expenseTotal').innerHTML='日圓 ¥'+jpy.toLocaleString('ja-JP')+'<br>台幣 NT
-function convert(){let y=Number(document.getElementById('yen').value),r=Number(document.getElementById('rate').value);document.getElementById('conversion').textContent=Number.isFinite(y*r)&&y>0?'約 NT$ '+Math.round(y*r).toLocaleString():'輸入金額後換算台幣'}document.getElementById('yen').oninput=convert;document.getElementById('rate').oninput=convert;
-
-</script>
-</body>
-</html>
-+twd.toLocaleString('zh-TW');
+  document.getElementById('expenseTotal').innerHTML='日圓 ¥'+jpy.toLocaleString('ja-JP')+'<br>台幣 NT$'+twd.toLocaleString('zh-TW');
   document.getElementById('expenseList').innerHTML=expenses.map((e,i)=>'<div class="expense-item"><span>'+(e.date||e.day||'未填日期')+'・'+e.name+'</span><span>'+currencySymbol(e.currency||'JPY')+e.amount.toLocaleString()+' <button aria-label="刪除" style="border:0;background:none;color:#c77" onclick="removeExpense('+i+')">×</button></span></div>').join('')||'<p class="muted">尚未新增花費</p>';
   localStorage.setItem('shikoku-expenses',JSON.stringify(expenses));
 }
@@ -256,7 +244,9 @@ document.getElementById('addExpense').onclick=()=>{
   renderExpenses();
 };
 renderExpenses();
-function convert(){let y=Number(document.getElementById('yen').value),r=Number(document.getElementById('rate').value);document.getElementById('conversion').textContent=Number.isFinite(y*r)&&y>0?'約 NT$ '+Math.round(y*r).toLocaleString():'輸入金額後換算台幣'}document.getElementById('yen').oninput=convert;document.getElementById('rate').oninput=convert;
+function convert(){let y=Number(document.getElementById('yen').value),r=Number(document.getElementById('rate').value);document.getElementById('conversion').textContent=Number.isFinite(y*r)&&y>0?'約 NT$ '+Math.round(y*r).toLocaleString():'輸入金額後換算台幣'}
+document.getElementById('yen').oninput=convert;
+document.getElementById('rate').oninput=convert;
 
 </script>
 </body>
